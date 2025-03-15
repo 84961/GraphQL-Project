@@ -1,8 +1,3 @@
-# Type queries here, and you will see intelligent autosuggestions
-# aware of GitHub's current GraphQL schema, equipped with live
-# syntax and validation errors highlighted within the text. We'll
-# get you started with a simple query showing your username!
-
 query {
   repository(name:"graphql",owner:"facebook") {
     name,
@@ -10,4 +5,51 @@ query {
     createdAt
     
   }
+}
+
+
+
+query {
+  repository(name:"graphql",owner:"facebook") {
+    name,
+    nameWithOwner,
+    createdAt,
+    id,
+    description
+    
+  }
+}
+
+#aliasing queries
+{
+  DotentCoreRepository:
+  repository(name: "core", owner: "dotnet") {
+    createdAt
+    id
+    description
+  }
+  DotentWPFRepository:
+  repository(name: "wpf", owner: "dotnet") {
+    createdAt
+    id
+    description
+  }
+
+
+#fragments
+
+{
+  DotentCoreRepository: repository(name: "core", owner: "dotnet") {
+    ...RepositoryCommonFields
+  }
+  DotentWPFRepository: repository(name: "wpf", owner: "dotnet") {
+    ...RepositoryCommonFields
+  }
+}
+
+fragment RepositoryCommonFields on Repository {
+  createdAt
+  id
+  description
+}
 }
