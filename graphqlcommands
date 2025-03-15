@@ -53,3 +53,59 @@ fragment RepositoryCommonFields on Repository {
   description
 }
 }
+
+#passing variable
+query DotNetRepo($name:String!) {
+  repository(name:$name owner: "dotnet") {
+    createdAt
+    id
+    description
+  }
+}
+
+in variables tab
+
+{
+  "name": "core"
+}
+
+
+query DotNetRepo($name: String!, $owner: String!) {
+  repository(name: $name, owner: $owner) {
+    createdAt
+    id
+    description
+  }
+}
+
+{
+  "name": "core",
+  "owner": "dotnet"
+}
+
+
+#mutation example
+
+mutation CreateProjectV2($ownerId: ID!, $title: String!, $repositoryId: ID) {
+  createProjectV2(
+    input: {ownerId: $ownerId, title: $title, repositoryId: $repositoryId}
+  ) {
+    projectV2 {
+      id
+      number
+      title
+      url
+      createdAt
+    }
+  }
+}
+
+
+
+{
+  "ownerId": "replace it",
+  "title": "MyFirstGraphqlProject"
+}
+
+
+
